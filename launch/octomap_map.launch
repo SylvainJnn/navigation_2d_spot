@@ -1,0 +1,5 @@
+<launch>
+	<node pkg="octomap_server" type="octomap_server_node" name="octomap_server" args="$(find navigation_2d_spot)/maps/lab.ot" output="screen" >
+	
+	</node>
+</launch>

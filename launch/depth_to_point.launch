@@ -1,0 +1,89 @@
+<launch>
+
+  <node pkg="nodelet" type="nodelet" name="standalone_nodelet" args="manager" />
+  
+  <!-- Front Left camera -->
+  <node pkg="nodelet" type="nodelet" name="frontleft_to_poitcloud" args="load rtabmap_ros/point_cloud_xyz standalone_nodelet">
+    <remap from="/depth/image" to="/spot/depth/frontleft/image"/>
+    <remap from="/depth/camera_info" to="/spot/depth/frontleft/camera_info"/> 
+
+    <remap from="/cloud" to="/spot/depth/frontleft/cloud"/> 
+
+    <param name="queue_size "                value="10"/>   
+    <param name="approx_sync"                value="true"/>   <!-- If false, the input topics must have the same timestamp -->
+    <param name="decimation"                 value="1"/>      <!-- Decimation of the images before creating the point cloud. 1 = to not decimate the images. Reducess the point cloud  -->
+    <param name="voxel_size"                 value="0.03"/>    <!-- 0.01 Voxel size (m) of the generated cloud. Set 0.0 to deactivate voxel filtering.  -->
+    <param name="min_depth"                  value="0.05"/>
+    <param name="max_depth"                  value="0.6"/>
+    <param name="noise_filter_radius"        value="0.0"/>    <!-- Max radius (m) for searching point neighbors. Set 0.0 to deactivate noise filtering.  -->
+    <param name="noise_filter_min_neighbors" value="5"/>      <!-- Minimum neighbors of a point to keep it. -->  
+  </node>
+
+  <!-- Front Right camera -->
+  <node pkg="nodelet" type="nodelet" name="frontright_to_poitcloud" args="load rtabmap_ros/point_cloud_xyz standalone_nodelet">
+    <remap from="/depth/image" to="/spot/depth/frontright/image"/>
+    <remap from="/depth/camera_info" to="/spot/depth/frontright/camera_info"/> 
+
+    <remap from="/cloud" to="/spot/depth/frontright/cloud"/> 
+
+    <param name="queue_size "                value="10"/>   
+    <param name="approx_sync"                value="true"/>   <!-- If false, the input topics must have the same timestamp -->
+    <param name="decimation"                 value="1"/>      <!-- Decimation of the images before creating the point cloud. 1 = to not decimate the images. Reducess the point cloud  -->
+    <param name="voxel_size"                 value="0.03"/>    <!-- 0.01 Voxel size (m) of the generated cloud. Set 0.0 to deactivate voxel filtering.  -->
+    <param name="min_depth"                  value="0.05"/>
+    <param name="max_depth"                  value="0.6"/>
+    <param name="noise_filter_radius"        value="0.0"/>    <!-- Max radius (m) for searching point neighbors. Set 0.0 to deactivate noise filtering.  -->
+    <param name="noise_filter_min_neighbors" value="5"/>      <!-- Minimum neighbors of a point to keep it. -->  
+  </node>
+
+  <!-- Back camera -->
+  <node pkg="nodelet" type="nodelet" name="back_to_poitcloud" args="load rtabmap_ros/point_cloud_xyz standalone_nodelet">
+    <remap from="/depth/image" to="/spot/depth/back/image"/>
+    <remap from="/depth/camera_info" to="/spot/depth/back/camera_info"/> 
+
+    <remap from="/cloud" to="/spot/depth/back/cloud"/> 
+
+    <param name="queue_size "                value="10"/>   
+    <param name="approx_sync"                value="true"/>   <!-- If false, the input topics must have the same timestamp -->
+    <param name="decimation"                 value="1"/>      <!-- Decimation of the images before creating the point cloud. 1 = to not decimate the images. Reducess the point cloud  -->
+    <param name="voxel_size"                 value="0.03"/>    <!-- 0.01 Voxel size (m) of the generated cloud. Set 0.0 to deactivate voxel filtering.  -->
+    <param name="min_depth"                  value="0.05"/>
+    <param name="max_depth"                  value="0.6"/>
+    <param name="noise_filter_radius"        value="0.0"/>    <!-- Max radius (m) for searching point neighbors. Set 0.0 to deactivate noise filtering.  -->
+    <param name="noise_filter_min_neighbors" value="5"/>      <!-- Minimum neighbors of a point to keep it. -->  
+  </node>
+
+    <!-- Left camera -->
+  <node pkg="nodelet" type="nodelet" name="left_to_poitcloud" args="load rtabmap_ros/point_cloud_xyz standalone_nodelet">
+    <remap from="/depth/image" to="/spot/depth/left/image"/>
+    <remap from="/depth/camera_info" to="/spot/depth/left/camera_info"/> 
+
+    <remap from="/cloud" to="/spot/depth/left/cloud"/> 
+
+    <param name="queue_size "                value="10"/>   
+    <param name="approx_sync"                value="true"/>   <!-- If false, the input topics must have the same timestamp -->
+    <param name="decimation"                 value="1"/>      <!-- Decimation of the images before creating the point cloud. 1 = to not decimate the images. Reducess the point cloud  -->
+    <param name="voxel_size"                 value="0.03"/>    <!-- 0.01 Voxel size (m) of the generated cloud. Set 0.0 to deactivate voxel filtering.  -->
+    <param name="min_depth"                  value="0.05"/>
+    <param name="max_depth"                  value="0.6"/>
+    <param name="noise_filter_radius"        value="0.0"/>    <!-- Max radius (m) for searching point neighbors. Set 0.0 to deactivate noise filtering.  -->
+    <param name="noise_filter_min_neighbors" value="5"/>      <!-- Minimum neighbors of a point to keep it. -->  
+  </node>
+
+      <!-- Right camera -->
+  <node pkg="nodelet" type="nodelet" name="right_to_poitcloud" args="load rtabmap_ros/point_cloud_xyz standalone_nodelet">
+    <remap from="/depth/image" to="/spot/depth/right/image"/>
+    <remap from="/depth/camera_info" to="/spot/depth/right/camera_info"/> 
+
+    <remap from="/cloud" to="/spot/depth/right/cloud"/> 
+
+    <param name="queue_size "                value="10"/>   
+    <param name="approx_sync"                value="true"/>   <!-- If false, the input topics must have the same timestamp -->
+    <param name="decimation"                 value="1"/>      <!-- Decimation of the images before creating the point cloud. 1 = to not decimate the images. Reducess the point cloud  -->
+    <param name="voxel_size"                 value="0.03"/>    <!-- 0.01 Voxel size (m) of the generated cloud. Set 0.0 to deactivate voxel filtering.  -->
+    <param name="min_depth"                  value="0.05"/>
+    <param name="max_depth"                  value="0.6"/>
+    <param name="noise_filter_radius"        value="0.0"/>    <!-- Max radius (m) for searching point neighbors. Set 0.0 to deactivate noise filtering.  -->
+    <param name="noise_filter_min_neighbors" value="5"/>      <!-- Minimum neighbors of a point to keep it. -->  
+  </node>
+</launch>

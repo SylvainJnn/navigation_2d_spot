@@ -1,0 +1,44 @@
+<launch>
+
+    <!-- ROSPlan turtlebot3 demo with ROSPlan -->
+    <arg name="map_file" default="$(find navigation_2d_spot)/maps/map.yaml"/>
+
+    <!-- Launch navigation 
+    <include file="$(find navigation_2d_spot)/launch/navigate_no_move.launch" >
+    </include>
+    -->
+    <include file="$(find navigation_2d_spot)/launch/navigate.launch" >
+    </include>
+
+    <!-- do need this (knowladge base) -->
+    <include file="$(find rosplan_interface_mapping)/launch/rosplan_roadmap_server.launch" />
+    
+
+ 
+    <!-- upload waypoints (dictionary, id:coordinates) to param server from yaml file -->
+    <rosparam command="load" file="$(find navigation_2d_spot)/config/waypoints.yaml"/>
+
+    <!-- ROSPlan -->
+    <include file="$(find rosplan_planning_system)/launch/interfaced_planning_system.launch" >
+        <arg name="domain_path" value="$(find navigation_2d_spot)/common/no_move_base/domain_spot.pddl" />
+        <!-- load a particular initial state into KB at startup (optional) -->
+        <!-- we leave it empty because in this demo we use a bash script to upload information to KB, not a pddl problem -->
+        <arg name="problem_path" value="" />
+        <!-- automatically generated pddl problem will be created here -->
+        <arg name="autom_gen_problem_path" value="$(find navigation_2d_spot)/common/no_move_base/problem.pddl" />
+        <!-- planner will produce output plan and write to this location -->
+        <arg name="data_path" value="$(find navigation_2d_spot)/common/no_move_base/" />
+    </include>
+
+    <!-- rosplan FMCW action interface, makes link between rosplan dispatcher and hardware -->
+    <node pkg="navigation_2d_spot" type="rpnavigate" name="rpnavigate" respawn="false" output="screen">
+        <param name="knowledge_base" value="rosplan_knowledge_base" />
+        <param name="pddl_action_name" value="goto_waypoint" />
+        <param name="action_server" value="/navigate_to_goal_spot" />
+        <param name="action_dispatch_topic" value="/rosplan_plan_dispatcher/action_dispatch" />
+        <param name="action_feedback_topic" value="/rosplan_plan_dispatcher/action_feedback" />
+    </node>
+
+
+
+</launch>

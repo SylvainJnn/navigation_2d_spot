@@ -1,0 +1,8 @@
+<launch>
+  <arg name="path" default="wp1"/>
+
+   
+  <node name="upload_plan" pkg="navigation_2d_spot" type="explore_wp.bash" output="screen">
+    <rosparam param="path" subst_value="True">$(arg path)</rosparam>
+  </node>
+</launch>

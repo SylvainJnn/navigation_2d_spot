@@ -1,0 +1,23 @@
+<launch>
+    <arg name="robot_name" default="/"/>
+    
+    <arg if="$(eval arg('robot_name') == '/')"  name="frame_prefix" value="" />
+    <arg unless="$(eval arg('robot_name') == '/')" name="frame_prefix" value="$(arg robot_name)/" />
+
+    <group ns="$(arg robot_name)">
+        <include file="$(find spot_config)/launch/include/gmapping.launch">
+            <arg name="frame_prefix" value="$(arg frame_prefix)"/>
+        </include>
+
+        <!-- Calls navigation stack packages -->
+        <include file="$(find spot_config)/launch/include/move_base.launch">
+            <arg name="frame_prefix" value="$(arg frame_prefix)"/>
+            <arg name="robot_name"   value="$(arg robot_name)"/>
+        </include>
+
+	<!-- Launch octomap mapping --> 
+	<include file="$(find octomap_server)/launch/octomap_mapping.launch"> 
+        </include> 
+
+    </group>
+</launch>
